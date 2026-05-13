@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { createClient } from '@supabase/supabase-js';
 import Loading from "./loading";
+import Modal from "../components/Modal";
 import "../styles/toptier.css";
 const supabase = createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_ANON_KEY);
 
@@ -123,40 +124,10 @@ const TopTier: React.FC = () => {
           </div>
 
           {hoveredMovie && (
-            <div className="movie-modal-backdrop" onClick={() => setHoveredMovie(null)}>
-              <div className="movie-modal" ref={modalRef} onClick={(e) => e.stopPropagation()}>
-                <button className="modal-close" onClick={() => setHoveredMovie(null)}>
-                  ×
-                </button>
-                <img
-                  src={hoveredMovie.src || "/images/placeholder.png"}
-                  alt={hoveredMovie.title}
-                  className="modal-image"
-                  loading="lazy"
-                />
-                <div className="modal-content">
-                  <h3 className="modal-title">{hoveredMovie.title}</h3>
-                  <p className="modal-category">{hoveredMovie.category}</p>
-                  <p className="modal-description">{hoveredMovie.description}</p>
-                  <div className="modal-ratings">
-                    {[
-                      { label: "ความมัน", value: hoveredMovie.ratings.excitement },
-                      { label: "ความฟิน", value: hoveredMovie.ratings.romance },
-                      { label: "ความซึ้ง", value: hoveredMovie.ratings.emotion },
-                      { label: "Overall", value: hoveredMovie.ratings.overall },
-                    ].map((rating) => (
-                      <div key={rating.label} className="rating-item">
-                        <span className="rating-label">{rating.label}</span>
-                        <div className="rating-bar">
-                          <div style={{ width: `${rating.value * 10}%` }} />
-                        </div>
-                        <span className="rating-value">{rating.value.toFixed(1)}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
+            <Modal 
+              movie={hoveredMovie} 
+              onClose={() => setHoveredMovie(null)} 
+            />
           )}
         </div>
       )}
