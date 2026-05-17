@@ -130,6 +130,7 @@ const NewBlog: React.FC = () => {
     } else {
       const { error } = await supabase.from("Store").insert([
         {
+          id: crypto.randomUUID(),
           src: imageUrl, // Store full URL
           title,
           description,
