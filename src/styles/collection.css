@@ -46,27 +46,30 @@
 
 .category-badge {
   display: inline-block;
-  padding: 0.3rem 1rem;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 800;
   margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #ffffff !important;
 }
 
 .category-badge.series {
-  background: #ff1a1a;
+  background: #ff1a1a !important;
 }
 
 .category-badge.movies {
-  background: #007acc;
+  background: #007acc !important;
 }
 
 .category-badge.documentaries {
-  background: #6b7280;
+  background: #6b7280 !important;
 }
 
 .category-badge.others {
-  background: #9ca3af;
+  background: #9ca3af !important;
 }
 
 .series-hero-content h1 {

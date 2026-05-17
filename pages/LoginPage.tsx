@@ -1,17 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import Background from "../components/Background";
+import { createClient } from "@supabase/supabase-js";
+import "../styles/login.css";
 
-
+// Initialize Supabase Client
+const supabase = createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_ANON_KEY);
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [backgroundItems, setBackgroundItems] = useState<any[]>([]);
 
- 
+  useEffect(() => {
+    const fetchBackgroundMovies = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("Store")
+          .select("id, src, title")
+          .order("created_at", { ascending: false });
+        if (!error && data) {
+          setBackgroundItems(data.map((item: any) => <img key={item.id} src={item.src} alt={item.title || "Movie Cover"} />));
+        }
+      } catch (err) {
+        console.error("Failed to load background movies in Login page:", err);
+      }
+    };
+    fetchBackgroundMovies();
+  }, []);
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
 
@@ -27,63 +48,73 @@ const Login: React.FC = () => {
 
   return (
     <>
-     <Navbar />
-     <div
-      className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-[1000]"
-    >
-      <div className="relative w-full max-w-[450px] bg-black bg-opacity-85 rounded-md p-[60px_68px_40px] text-white">
-        <Link to="/"><button
-        >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z" fill="white"/>
-          </svg>
-        </button></Link>
+      <Navbar />
+      <div className="login-container">
+        {/* Dynamic scrolling theater movie background behind form overlay */}
+        <div className="login-background-wrapper">
+          <Background items={backgroundItems} />
+        </div>
         
-        <div className="modal-body">
-          <h2 className="text-[32px] font-bold mb-7">Admin only</h2>
-          <form className="flex flex-col" onSubmit={handleSubmit}>
-            <div className="mb-4">
-              <input
-                type="text"
-                placeholder="Username"
-                required
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="w-full p-4 bg-[#333] border-none rounded text-white text-base placeholder-[#8c8c8c] focus:bg-[#454545] focus:outline-none"
-              />
+        <div className="login-overlay">
+          <div className="login-card">
+            {/* Elegant glassmorphic Close Button */}
+            <Link to="/">
+              <button className="login-close-btn" aria-label="Close Portal">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            </Link>
+            
+            <div className="login-header">
+              <div className="login-pre-title">🔒 ADMIN PORTAL</div>
+              <h2 className="login-title">PK MOVIE HUB</h2>
+              <p className="login-subtitle">Enter credentials to manage entries</p>
             </div>
-            <div className="mb-4">
-              <input
-                type="password"
-                placeholder="Password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full p-4 bg-[#333] border-none rounded text-white text-base placeholder-[#8c8c8c] focus:bg-[#454545] focus:outline-none"
-              />
-            </div>
-            <button
-              type="submit"
-              className="bg-[#e50914] text-white text-base font-medium py-4 rounded mt-6 mb-3 cursor-pointer hover:bg-[#f40612]"
-            >
-              Log in
-            </button>
-            <div className="flex justify-between items-center mt-3">
-              <label className="flex items-center text-[#b3b3b3] text-[13px]">
-                <input type="checkbox" defaultChecked className="mr-1" />
-                Remember me
-              </label>
-              <a href="#" className="text-[#b3b3b3] text-[13px] no-underline hover:underline">
-                Pk only
-              </a>
-            </div>
-          </form>
-         
+            
+            <form className="login-form" onSubmit={handleSubmit}>
+              <div className="login-field">
+                <input
+                  type="text"
+                  placeholder="Username"
+                  required
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="login-input"
+                  autoComplete="username"
+                />
+              </div>
+              <div className="login-field">
+                <input
+                  type="password"
+                  placeholder="Password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="login-input"
+                  autoComplete="current-password"
+                />
+              </div>
+              
+              <button type="submit" className="login-btn">
+                Log In
+              </button>
+              
+              <div className="login-footer">
+                <label className="login-checkbox-label">
+                  <input type="checkbox" defaultChecked className="login-checkbox" />
+                  <span>Remember me</span>
+                </label>
+                <a href="#" className="login-link">
+                  Need Help?
+                </a>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
-     </>
-    
+    </>
   );
 };
 

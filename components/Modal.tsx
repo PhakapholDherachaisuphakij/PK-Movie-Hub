@@ -42,7 +42,7 @@ const Modal: React.FC<ModalProps> = ({ image,desc, onClose }) => {
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <path d="M8 5V19L19 12L8 5Z" fill="white" />
+                <path d="M8 5V19L19 12L8 5Z" fill="currentColor" />
               </svg>
               <span>Play</span>
             </button>

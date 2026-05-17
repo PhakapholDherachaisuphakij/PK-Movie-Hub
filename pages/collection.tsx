@@ -136,6 +136,11 @@ function Collection() {
       <p className="review-text">{featuredSeries.description}</p>
       <div className="series-btn">
         <Link to="/admin/login" ><button className="play-btn" aria-label="Play trailer">
+          <span className="play-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5V19L19 12L8 5Z" />
+            </svg>
+          </span>
           Writing Blog
         </button></Link>
         

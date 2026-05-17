@@ -48,17 +48,20 @@ const Modal: React.FC<ModalProps> = ({ movie, onClose }) => {
           <img src={movie.src} alt={movie.title} />
           <div className="image-gradient"></div>
           <div className="play-button-overlay">
-            <button className="play-button">
+            <button 
+              className="play-button"
+              onClick={() => window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(movie.title + ' ' + movie.category + ' trailer')}`, '_blank')}
+            >
               <svg
-                width="24"
-                height="24"
+                width="20"
+                height="20"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <path d="M8 5V19L19 12L8 5Z" fill="white" />
+                <path d="M8 5V19L19 12L8 5Z" fill="currentColor" />
               </svg>
-              <span>Play</span>
+              <span>Play Trailer</span>
             </button>
           </div>
         </div>
@@ -72,6 +75,28 @@ const Modal: React.FC<ModalProps> = ({ movie, onClose }) => {
           <p className="modal-description">
             {movie.description}
           </p>
+
+          <div className="modal-actions-container">
+            <button 
+              className="modal-action-btn primary"
+              onClick={() => window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(movie.title + ' ' + movie.category + ' trailer')}`, '_blank')}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5V19L19 12L8 5Z" />
+              </svg>
+              <span>Play Trailer</span>
+            </button>
+            <button 
+              className="modal-action-btn secondary"
+              onClick={() => window.open(`https://www.google.com/search?q=${encodeURIComponent(movie.title + ' ' + movie.category)}`, '_blank')}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <span>Search Info</span>
+            </button>
+          </div>
           
           <div className="modal-ratings">
             {[
@@ -85,7 +110,9 @@ const Modal: React.FC<ModalProps> = ({ movie, onClose }) => {
                 <div className="rating-bar">
                   <div 
                     className="rating-fill" 
-                    style={{ width: `${rating.value * 10}%` }} 
+                    style={{ 
+                      width: `${rating.value * 10}%`
+                    }} 
                   />
                 </div>
                 <span className="rating-value">{rating.value.toFixed(1)}</span>

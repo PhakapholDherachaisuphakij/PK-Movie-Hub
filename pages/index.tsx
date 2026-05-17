@@ -21,8 +21,11 @@ import alchemyofsoul from "../../src/images/alchemy.jpg";
 import { JSX } from "react";
 import { Link } from "react-router-dom";
 
-const items: JSX.Element[] = [
-<img key="vagabond-1" src={vagabond} alt="Vagabond Image" />,
+import { useState, useEffect } from "react";
+import { supabase } from "../supabaseClient";
+
+const STATIC_FALLBACK_ITEMS: JSX.Element[] = [
+  <img key="vagabond-1" src={vagabond} alt="Vagabond Image" />,
   <img key="twinkling-watermelon-1" src={Twinkling} alt="Twinkling Watermelon Image" />,
   <img key="resident-playbook-1" src={residentplaybook} alt="Resident Playbook Image" />,
   <img key="queen-of-tears-1" src={Qot} alt="Queen of Tears Image" />,
@@ -41,7 +44,7 @@ const items: JSX.Element[] = [
   <img key="weak-hero-class-1-1" src={weakhero} alt="Weak Hero Class 1 Image" />,
   <img key="twinkling-watermelon-2" src={Twinkling} alt="Twinkling Watermelon Image" />,
   <img key="resident-playbook-2" src={residentplaybook} alt="Resident Playbook Image" />,
-   <img key="alchemy-of-soul" src={alchemyofsoul} alt="Hyper Knife Image" />,
+  <img key="alchemy-of-soul" src={alchemyofsoul} alt="Hyper Knife Image" />,
   <img key="queen-of-tears-2" src={Qot} alt="Queen of Tears Image" />,
   <img key="moving-2" src={moving} alt="Moving Image" />,
   <img key="tangerine-2" src={tangurine} alt="Tangerine Image" />,
@@ -53,30 +56,59 @@ const items: JSX.Element[] = [
 ];
 
 function Index() {
+  const [backgroundItems, setBackgroundItems] = useState<JSX.Element[]>(STATIC_FALLBACK_ITEMS);
+
+  useEffect(() => {
+    const loadBackgroundMovies = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("Store")
+          .select("id, src, title")
+          .order("created_at", { ascending: false });
+
+        if (!error && data && data.length > 0) {
+          const fetchedItems = data.map((movie) => (
+            <img key={movie.id} src={movie.src} alt={movie.title} />
+          ));
+          setBackgroundItems(fetchedItems);
+        }
+      } catch (err) {
+        console.error("Error loading dynamic background items:", err);
+      }
+    };
+    loadBackgroundMovies();
+  }, []);
+
   return (
     <div className="home-container">
-      <div>
-        <Background items={items} />
+      <div className="background-wrapper">
+        <Background items={backgroundItems} />
       </div>
-      <div className="card">
-        <h1 className="text-3xl font-bold">My Personal Series Collection</h1>
-        <br />
-        <h2>Phakaphol Dherachaisuphakij</h2>
-        <div className="flex flex-wrap justify-center items-center gap-6 mt-10">
-  <Link to="/admin/login">
-    <button className="w-48 h-12 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold rounded-xl shadow-md hover:scale-105 hover:brightness-110 transition-all duration-300">
-      Writing Blog
-    </button>
-  </Link>
-
-  <Link to="/collection">
-    <button className="w-48 h-12 bg-gradient-to-r from-red-600 to-rose-700 text-white font-semibold rounded-xl shadow-md hover:scale-105 hover:brightness-110 transition-all duration-300">
-      LET'S STARTED
-    </button>
-  </Link>
-</div>
-
-         
+      <div className="home-overlay">
+        <div className="home-card">
+          <div className="home-pre-title">🎬 PHAKAPHOL'S CURATION</div>
+          <h1 className="home-title">PK MOVIE HUB</h1>
+          <h2 className="home-subtitle">My Personal Series Collection</h2>
+          <p className="home-description">
+            A meticulously curated diary of cinematic masterpieces, emotional K-Dramas, action-packed blockbusters, and thought-provoking documentaries.
+          </p>
+          <div className="home-btn-group">
+            <Link to="/collection">
+              <button className="home-btn primary-btn">
+                <span>LET'S START</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </button>
+            </Link>
+            <Link to="/admin/login">
+              <button className="home-btn secondary-btn">
+                <span>Writing Blog</span>
+              </button>
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   );

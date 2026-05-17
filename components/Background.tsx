@@ -17,17 +17,30 @@ const Background: React.FC<BackgroundProps> = ({
 
   // Ensure the grid has 28 items (4 rows x 7 columns)
   const totalItems = 28;
-  const defaultItems: JSX.Element[] = Array.from(
-    { length: totalItems },
-    (_, index) => (
-      <div key={`default-${index}`} style={{ width: "100%", height: "100%", backgroundColor: "#333" }}>
-        {/* Placeholder content */}
-      </div>
-    )
-  );
-  const combinedItems: JSX.Element[] = items.length > 0
-    ? [...items, ...defaultItems].slice(0, totalItems) // Combine and trim to 28 items
-    : defaultItems;
+  const combinedItems: JSX.Element[] = [];
+
+  if (items.length > 0) {
+    // Dynamically loop and repeat items to fully fill the grid motion
+    for (let i = 0; i < totalItems; i++) {
+      const originalItem = items[i % items.length];
+      // Clone the item to avoid duplicate key warnings and ensure a unique key
+      combinedItems.push(
+        React.cloneElement(originalItem, {
+          key: `item-grid-${i}-${originalItem.key || i}`,
+          className: `${originalItem.props.className || ""} grid-image-item`,
+        })
+      );
+    }
+  } else {
+    // World-class loading placeholders/skeletons
+    for (let i = 0; i < totalItems; i++) {
+      combinedItems.push(
+        <div key={`default-${i}`} className="bg-skeleton-card">
+          <div className="skeleton-icon">🎬</div>
+        </div>
+      );
+    }
+  }
 
   useEffect(() => {
     gsap.ticker.lagSmoothing(0);

@@ -156,13 +156,17 @@
   align-items: center;
   gap: 0.5rem;
   font-size: 1.2rem;
-  font-weight: 600;
-  color: #ffd700;
+  font-weight: 700;
+  background: linear-gradient(90deg, #ff1a1a 0%, #ff4d4d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .star {
   font-size: 1.4rem;
-  color: #ffd700;
+  color: #ff1a1a;
+  text-shadow: 0 0 10px rgba(255, 26, 26, 0.5);
+  -webkit-text-fill-color: initial;
 }
 
 .movie-modal-backdrop {

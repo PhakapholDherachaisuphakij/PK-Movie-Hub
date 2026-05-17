@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { createClient } from '@supabase/supabase-js';
 import Navbar from "./Navbar";
+import "../styles/newblog.css";
 
 // Initialize Supabase client
 const supabase = createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_ANON_KEY);
@@ -41,27 +42,26 @@ const NewBlog: React.FC = () => {
     if (file) setImage(file);
   };
 
- const uploadImageToStorage = async (file: File): Promise<string | null> => {
-  const fileExtension = file.name.split('.').pop();
-  const safeFileName = `${crypto.randomUUID()}.${fileExtension}`;
+  const uploadImageToStorage = async (file: File): Promise<string | null> => {
+    const fileExtension = file.name.split('.').pop();
+    const safeFileName = `${crypto.randomUUID()}.${fileExtension}`;
 
-  const { error } = await supabase.storage
-    .from("image")
-    .upload(safeFileName, file);
+    const { error } = await supabase.storage
+      .from("image")
+      .upload(safeFileName, file);
 
-  if (error) {
-    console.error("Upload error", error);
-    setError(`Failed to upload image: ${error.message}`);
-    return null;
-  }
+    if (error) {
+      console.error("Upload error", error);
+      setError(`Failed to upload image: ${error.message}`);
+      return null;
+    }
 
-  const { data: publicUrlData } = supabase.storage
-    .from("image")
-    .getPublicUrl(safeFileName);
+    const { data: publicUrlData } = supabase.storage
+      .from("image")
+      .getPublicUrl(safeFileName);
 
-  return publicUrlData?.publicUrl ?? null;
-};
-
+    return publicUrlData?.publicUrl ?? null;
+  };
 
   const resetForm = () => {
     setTitle("");
@@ -115,7 +115,7 @@ const NewBlog: React.FC = () => {
             emotion: ratings.emotion,
             overall: ratings.overall,
           },
-          ...(imageUrl && { src: imageUrl }), 
+          ...(imageUrl && { src: imageUrl }),
         })
         .eq("id", editingMovieId);
 
@@ -131,7 +131,7 @@ const NewBlog: React.FC = () => {
       const { error } = await supabase.from("Store").insert([
         {
           id: crypto.randomUUID(),
-          src: imageUrl, // Store full URL
+          src: imageUrl,
           title,
           description,
           category,
@@ -151,7 +151,7 @@ const NewBlog: React.FC = () => {
       } else {
         alert("Movie saved successfully!");
         resetForm();
-        fetchMovies(); // Refresh list
+        fetchMovies();
       }
     }
     setLoading(false);
@@ -160,168 +160,204 @@ const NewBlog: React.FC = () => {
   return (
     <>
       <Navbar />
-      <div className="max-w-3xl mx-auto p-6 text-white">
-        <h1 className="text-3xl font-bold mb-6 text-center">Create New Movie</h1>
-
-        {error && (
-          <div className="bg-red-600 text-white p-3 rounded mb-4 text-center">
-            {error}
+      <div className="dashboard-container">
+        <div className="dashboard-card">
+          <div className="dashboard-header">
+            <div className="dashboard-pre-title">✍️ Curation Panel</div>
+            <h1 className="dashboard-title">PK Editorial Board</h1>
+            <p className="dashboard-subtitle">Create and manage your high-end cinematic curation lists</p>
           </div>
-        )}
 
-        <div className="w-full h-60 bg-gray-700 rounded-lg mb-6 flex items-center justify-center relative overflow-hidden">
-          {image ? (
-            <img
-              src={URL.createObjectURL(image)}
-              alt="Preview"
-              className="w-full h-full object-cover"
-            />
-          ) : (
-            <label className="text-gray-300 cursor-pointer">
-              Click to upload image
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-                className="hidden"
+          {error && (
+            <div className="bg-red-600 text-white p-4 rounded-xl mb-6 text-center font-semibold shadow-md">
+              ⚠️ {error}
+            </div>
+          )}
+
+          {/* Glowing File Upload Zone */}
+          <div className="dashboard-upload-zone">
+            {image ? (
+              <img
+                src={URL.createObjectURL(image)}
+                alt="Preview"
+                className="dashboard-upload-preview"
               />
-            </label>
-          )}
-        </div>
-
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <input
-            type="text"
-            placeholder="ชื่อหนัง / Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="p-3 rounded bg-[#222] border border-red-600"
-            required
-          />
-          <textarea
-            placeholder="รายละเอียด / Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            rows={5}
-            className="p-3 rounded bg-[#222] border border-red-600"
-            required
-          />
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            className="p-3 rounded bg-[#222] border border-gray-600"
-            required
-          >
-            <option value="">Select Category</option>
-            {categories.map((cat) => (
-              <option key={cat} value={cat}>
-                {cat}
-              </option>
-            ))}
-          </select>
-          <select
-            value={genre}
-            onChange={(e) => setGenre(e.target.value)}
-            className="p-3 rounded bg-[#222] border border-gray-600"
-            required
-          >
-            <option value="">Select Genre</option>
-            {genres.map((g) => (
-              <option key={g} value={g}>
-                {g}
-              </option>
-            ))}
-          </select>
-          <div className="grid grid-cols-2 gap-6 w-full">
-            {["excitement", "romance", "emotion", "overall"].map((field) => (
-              <div key={field} className="flex flex-col w-full">
-                <label className="text-lg font-semibold capitalize mb-2">
-                  {field}
-                </label>
+            ) : (
+              <label className="dashboard-upload-label">
+                <span className="dashboard-upload-icon">📷</span>
+                <span>Click to upload cinematic cover poster</span>
                 <input
-                  type="number"
-                  placeholder={`${field.charAt(0).toUpperCase() + field.slice(1)} (0-10)`}
-                  value={(ratings as any)[field]}
-                  onChange={(e) =>
-                    setRatings((prev) => ({
-                      ...prev,
-                      [field]: parseFloat(e.target.value) || 0,
-                    }))
-                  }
-                  className="w-full p-4 rounded-xl bg-[#222] border border-red-600 focus:outline-none focus:ring-2 focus:ring-red-400"
-                  min={0}
-                  max={10}
-                  step={0.1}
-                  required
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  className="hidden"
                 />
-              </div>
-            ))}
+              </label>
+            )}
           </div>
-          <button
-            type="submit"
-            className="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 rounded mt-4"
-            disabled={loading}
-          >
-            {loading ? "Processing..." : isEditing ? "Update Movie" : "Save Movie"}
-          </button>
-          {isEditing && (
-            <button
-              type="button"
-              onClick={resetForm}
-              className="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-3 rounded mt-2 w-full"
-            >
-              Cancel Edit
-            </button>
-          )}
-        </form>
 
-        <div className="mt-12">
-          <h2 className="text-2xl font-bold mb-6">Manage Movies</h2>
-          <div className="grid grid-cols-1 gap-4">
-            {movies.map((movie) => (
-              <div key={movie.id} className="bg-[#222] p-4 rounded-lg flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <img src={movie.src} alt={movie.title} className="w-16 h-16 object-cover rounded" />
-                  <div>
-                    <h3 className="font-bold">{movie.title}</h3>
-                    <p className="text-sm text-gray-400">{movie.category} | {movie.genre}</p>
+          <form onSubmit={handleSubmit} className="dashboard-form">
+            <div className="dashboard-field">
+              <label className="dashboard-label">Movie / Series Title</label>
+              <input
+                type="text"
+                placeholder="ชื่อหนัง / Title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                className="dashboard-input"
+                required
+              />
+            </div>
+
+            <div className="dashboard-field">
+              <label className="dashboard-label">Review Details / Description</label>
+              <textarea
+                placeholder="รายละเอียด / Description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                rows={5}
+                className="dashboard-textarea"
+                required
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="dashboard-field">
+                <label className="dashboard-label">Category</label>
+                <select
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  className="dashboard-select"
+                  required
+                >
+                  <option value="">Select Category</option>
+                  {categories.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="dashboard-field">
+                <label className="dashboard-label">Genre</label>
+                <select
+                  value={genre}
+                  onChange={(e) => setGenre(e.target.value)}
+                  className="dashboard-select"
+                  required
+                >
+                  <option value="">Select Genre</option>
+                  {genres.map((g) => (
+                    <option key={g} value={g}>
+                      {g}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            {/* Ratings Section */}
+            <div className="dashboard-ratings-title">Cinematic Scores</div>
+            <div className="dashboard-ratings-grid">
+              {["excitement", "romance", "emotion", "overall"].map((field) => (
+                <div key={field} className="dashboard-field">
+                  <label className="dashboard-label capitalize">
+                    {field === "excitement" ? "ความมัน" : field === "romance" ? "ความฟิน" : field === "emotion" ? "ความซึ้ง" : "Overall Rating"}
+                  </label>
+                  <input
+                    type="number"
+                    placeholder={`${field.charAt(0).toUpperCase() + field.slice(1)} (0-10)`}
+                    value={(ratings as any)[field]}
+                    onChange={(e) =>
+                      setRatings((prev) => ({
+                        ...prev,
+                        [field]: parseFloat(e.target.value) || 0,
+                      }))
+                    }
+                    className="dashboard-input"
+                    min={0}
+                    max={10}
+                    step={0.1}
+                    required
+                  />
+                </div>
+              ))}
+            </div>
+
+            <div className="dashboard-btn-group">
+              <button
+                type="submit"
+                className="dashboard-btn primary"
+                disabled={loading}
+              >
+                {loading ? "Processing..." : isEditing ? "Update Entry" : "Add to Collection"}
+              </button>
+              {isEditing && (
+                <button
+                  type="button"
+                  onClick={resetForm}
+                  className="dashboard-btn secondary"
+                >
+                  Cancel Edit
+                </button>
+              )}
+            </div>
+          </form>
+
+          {/* Manage Movies Section */}
+          <div className="dashboard-list-section">
+            <h2 className="dashboard-list-title">Manage Curation Catalog ({movies.length})</h2>
+            <div className="dashboard-list-grid">
+              {movies.map((movie) => (
+                <div key={movie.id} className="dashboard-movie-item">
+                  <div className="dashboard-item-info">
+                    <img src={movie.src} alt={movie.title} className="dashboard-item-thumbnail" />
+                    <div>
+                      <h3 className="dashboard-item-title">{movie.title}</h3>
+                      <div className="dashboard-item-meta">
+                        <span className="dashboard-item-badge">{movie.category}</span>
+                        <span>•</span>
+                        <span className="text-gray-400">{movie.genre}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="dashboard-item-actions">
+                    <button
+                      onClick={() => {
+                        setIsEditing(true);
+                        setEditingMovieId(movie.id);
+                        setTitle(movie.title);
+                        setDescription(movie.description);
+                        setCategory(movie.category);
+                        setGenre(movie.genre);
+                        setRatings(movie.ratings);
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                      }}
+                      className="dashboard-action-btn edit"
+                    >
+                      ✏️ Edit
+                    </button>
+                    <button
+                      onClick={async () => {
+                        if (window.confirm(`Are you sure you want to delete ${movie.title}?`)) {
+                          const { error } = await supabase.from("Store").delete().eq("id", movie.id);
+                          if (error) {
+                            alert(`Failed to delete: ${error.message}`);
+                          } else {
+                            alert("Deleted successfully!");
+                            fetchMovies();
+                          }
+                        }
+                      }}
+                      className="dashboard-action-btn delete"
+                    >
+                      🗑️ Delete
+                    </button>
                   </div>
                 </div>
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => {
-                      setIsEditing(true);
-                      setEditingMovieId(movie.id);
-                      setTitle(movie.title);
-                      setDescription(movie.description);
-                      setCategory(movie.category);
-                      setGenre(movie.genre);
-                      setRatings(movie.ratings);
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }}
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={async () => {
-                      if (window.confirm(`Are you sure you want to delete ${movie.title}?`)) {
-                        const { error } = await supabase.from("Store").delete().eq("id", movie.id);
-                        if (error) {
-                          alert(`Failed to delete: ${error.message}`);
-                        } else {
-                          alert("Deleted successfully!");
-                          fetchMovies();
-                        }
-                      }
-                    }}
-                    className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded text-sm"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>
