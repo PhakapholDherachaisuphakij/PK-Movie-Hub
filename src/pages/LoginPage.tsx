@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Background from "../components/Background";
-import { createClient } from "@supabase/supabase-js";
+import { supabase } from "../supabaseClient";
 import "../styles/login.css";
-
-// Initialize Supabase Client
-const supabase = createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_ANON_KEY);
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -32,14 +28,14 @@ const Login: React.FC = () => {
     };
     fetchBackgroundMovies();
   }, []);
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
 
     const envUsername = import.meta.env.VITE_ADMIN_USERNAME;
     const envPassword = import.meta.env.VITE_ADMIN_PASSWORD;
 
-    if (username === envUsername && password === envPassword) {
+    if (username.trim() === envUsername && password === envPassword) {
+      sessionStorage.setItem("pk_admin_auth", "true");
       navigate("/blogwriter/NewBlog");
     } else {
       alert("Incorrect username or password");

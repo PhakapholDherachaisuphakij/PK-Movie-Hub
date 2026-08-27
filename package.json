@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "migrate:selfhost": "node scripts/migrate_to_selfhost.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.53.0",

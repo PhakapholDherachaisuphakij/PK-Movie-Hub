@@ -21,5 +21,13 @@ dist-ssr
 *.ntvs*
 *.njsproj
 *.sln
-*.sw?
+# Environment & Secrets
 .env
+.env.*
+!.env.example
+
+# Temporary Migration & Backup Dumps
+*backup*.json
+*dump*
+scripts/storage_backup/
+scripts/full_database_dump/

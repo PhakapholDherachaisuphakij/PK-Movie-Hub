@@ -1,9 +1,8 @@
 import { useEffect, useState, useRef } from "react";
-import { createClient } from '@supabase/supabase-js';
 import Loading from "./loading";
 import Modal from "../components/Modal";
+import { supabase } from "../supabaseClient";
 import "../styles/toptier.css";
-const supabase = createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_ANON_KEY);
 
 interface Movie {
   id: string;

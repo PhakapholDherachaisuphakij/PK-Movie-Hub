@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { createClient } from '@supabase/supabase-js';
+import { useNavigate } from "react-router-dom";
+import { supabase } from "../supabaseClient";
 import Navbar from "./Navbar";
 import "../styles/newblog.css";
 
-// Initialize Supabase client
-const supabase = createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_ANON_KEY);
-
 const NewBlog: React.FC = () => {
+  const navigate = useNavigate();
   const categories = ["Series", "Movies", "Documentaries"] as const;
   const genres = ["Romance", "Drama", "Action", "Thriller", "Documentary", "Comedy"] as const;
   const [title, setTitle] = useState("");
@@ -26,6 +25,11 @@ const NewBlog: React.FC = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editingMovieId, setEditingMovieId] = useState<string | null>(null);
 
+  const handleLogout = () => {
+    sessionStorage.removeItem("pk_admin_auth");
+    navigate("/admin/login");
+  };
+
   const fetchMovies = async () => {
     const { data, error } = await supabase.from("Store").select("*").order("created_at", { ascending: false });
     if (!error && data) {
@@ -34,8 +38,13 @@ const NewBlog: React.FC = () => {
   };
 
   React.useEffect(() => {
+    const isAuth = sessionStorage.getItem("pk_admin_auth") === "true";
+    if (!isAuth) {
+      navigate("/admin/login");
+      return;
+    }
     fetchMovies();
-  }, []);
+  }, [navigate]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -162,10 +171,18 @@ const NewBlog: React.FC = () => {
       <Navbar />
       <div className="dashboard-container">
         <div className="dashboard-card">
-          <div className="dashboard-header">
-            <div className="dashboard-pre-title">✍️ Curation Panel</div>
-            <h1 className="dashboard-title">PK Editorial Board</h1>
-            <p className="dashboard-subtitle">Create and manage your high-end cinematic curation lists</p>
+          <div className="dashboard-header flex justify-between items-start">
+            <div>
+              <div className="dashboard-pre-title">✍️ Curation Panel</div>
+              <h1 className="dashboard-title">PK Editorial Board</h1>
+              <p className="dashboard-subtitle">Create and manage your high-end cinematic curation lists</p>
+            </div>
+            <button
+              onClick={handleLogout}
+              className="px-4 py-2 bg-red-900/40 hover:bg-red-800/80 text-red-300 hover:text-white rounded-lg text-sm transition-all border border-red-700/50 cursor-pointer"
+            >
+              🚪 Logout
+            </button>
           </div>
 
           {error && (

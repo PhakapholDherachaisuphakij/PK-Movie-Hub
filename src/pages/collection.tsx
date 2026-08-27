@@ -8,10 +8,8 @@ import Loading from "./loading";
 import Modal from "../components/Modal";
 import TopTier from "./toptier";
 import { Link } from 'react-router-dom';
+import { supabase } from "../supabaseClient";
 import "../styles/collection.css";
-import { createClient } from '@supabase/supabase-js';
-
-const supabase = createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_ANON_KEY);
 
 interface Movie {
   id: string;
