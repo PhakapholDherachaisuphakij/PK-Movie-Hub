@@ -82,14 +82,14 @@
     position: absolute;
     top: 0;
     left: 0;
-    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease;
-    filter: brightness(0.35) contrast(1.15) saturate(0.85);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
+    filter: brightness(0.52) contrast(1.08) saturate(1.02);
   }
   
   .row__item-inner:hover .grid-image-item, 
   .row__item-inner:hover .row__item-img {
-    transform: scale(1.08);
-    filter: brightness(0.7) contrast(1.25) saturate(1.1);
+    transform: scale(1.06);
+    filter: brightness(0.8) contrast(1.15) saturate(1.15);
   }
   
   /* Skeletons */

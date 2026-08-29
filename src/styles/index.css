@@ -1,18 +1,73 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBMPlexSansThai:wght@400;700&display=swap');
 @import "tailwindcss";
 
-/* ตั้งค่าให้ตัวอักษรไทยใช้ฟอนต์ IBMPlexSansThai */
+:root {
+  --bg-base: #08080a;
+  --bg-surface: #111116;
+  --bg-surface-elevated: #18181f;
+  --bg-glass: rgba(17, 17, 22, 0.75);
+  --bg-glass-strong: rgba(12, 12, 16, 0.88);
+  
+  --brand-red: #e50914;
+  --brand-red-hover: #ff1e27;
+  --brand-red-glow: rgba(229, 9, 20, 0.35);
+  --brand-red-subtle: rgba(229, 9, 20, 0.12);
+
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.15);
+  --border-focus: rgba(229, 9, 20, 0.6);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  --shadow-card: 0 12px 32px -4px rgba(0, 0, 0, 0.6);
+  --shadow-glow: 0 0 25px rgba(229, 9, 20, 0.3);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
-  font-family: 'Bebas Neue', 'IBMPlexSansThai', sans-serif;
-  width: 100vw;
+  font-family: 'Plus Jakarta Sans', 'Noto Sans Thai', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* ถ้าข้อความเป็นภาษาไทย ให้ใช้ฟอนต์ IBMPlexSansThai */
-:lang(th) {
-  font-family: 'IBMPlexSansThai', sans-serif;
+/* Headings with cinematic flair */
+h1, h2, h3, .font-display {
+  font-family: 'Outfit', 'Plus Jakarta Sans', 'Noto Sans Thai', sans-serif;
+  letter-spacing: -0.02em;
 }
 
-/* ถ้าข้อความเป็นภาษาอังกฤษ ให้ใช้ Bebas Neue */
-:lang(en) {
-  font-family: 'Bebas Neue', sans-serif;
+/* Custom Sleek Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
+
+::-webkit-scrollbar-track {
+  background: #08080a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #27272e;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--brand-red);
+}
+

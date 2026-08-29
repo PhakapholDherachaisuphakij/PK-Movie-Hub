@@ -1,94 +1,134 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
-
-
+/* Modern 2026 World-Class Hall of Fame Rankings */
 
 .toptier-container {
-  min-height: 100vh;
-  font-family: 'Poppins', sans-serif;
-  color: #ffffff;
-  padding: 2rem 1rem;
+  width: 100%;
+  color: var(--text-primary, #f8fafc);
+  padding: 1rem 1rem 4rem 1rem;
   display: flex;
   justify-content: center;
-  overflow-y: auto; 
 }
 
 .tier-section {
-  width: 100%;
-  max-width: 1200px;
-  padding: 3rem 0;
+  width: 92%;
+  max-width: 1360px;
+  padding: 2rem 0;
+}
+
+.tier-header-wrapper {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.tier-pre-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--brand-red, #e50914);
+  background: rgba(229, 9, 20, 0.1);
+  border: 1px solid rgba(229, 9, 20, 0.25);
+  padding: 5px 14px;
+  border-radius: 9999px;
+  letter-spacing: 0.1em;
+  margin-bottom: 12px;
 }
 
 .tier-title {
-  font-size: 3.5rem;
-  font-weight: 800;
-  text-align: center;
-  margin-bottom: 3rem;
-  background: linear-gradient(45deg, #ff0066, #ff4d4d);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 4px 20px rgba(255, 0, 102, 0.4);
+  font-family: 'Outfit', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  margin-bottom: 8px;
 }
 
+.tier-subtitle {
+  font-size: 0.95rem;
+  color: #94a3b8;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* Ranking List */
 .ranking-list {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 14px;
 }
 
 .ranking-card {
-  background: rgba(30, 30, 30, 0.8);
-  border-radius: 20px;
-  padding: 1.5rem;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: rgba(18, 18, 24, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 16px 20px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
-  opacity: 0;
-  transform: translateY(50px);
-  animation: slideIn 0.6s ease-out forwards;
-  border: 1px solid rgba(255, 0, 102, 0.2);
-  will-change: transform, opacity; /* Optimize for animations */
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  position: relative;
+  overflow: hidden;
 }
 
-/* Staggered animation delays */
-.ranking-card:nth-child(1) { animation-delay: 0.1s; }
-.ranking-card:nth-child(2) { animation-delay: 0.2s; }
-.ranking-card:nth-child(3) { animation-delay: 0.3s; }
-.ranking-card:nth-child(4) { animation-delay: 0.4s; }
-.ranking-card:nth-child(5) { animation-delay: 0.5s; }
-.ranking-card:nth-child(6) { animation-delay: 0.6s; }
-.ranking-card:nth-child(7) { animation-delay: 0.7s; }
-.ranking-card:nth-child(8) { animation-delay: 0.8s; }
-.ranking-card:nth-child(9) { animation-delay: 0.9s; }
-.ranking-card:nth-child(10) { animation-delay: 1s; }
-
 .ranking-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 10px 20px rgba(255, 0, 102, 0.2); /* Reduced shadow for performance */
-  border-color: #ff0066;
-  background: rgba(40, 40, 40, 0.9);
+  transform: translateY(-4px);
+  background: rgba(25, 25, 33, 0.85);
+  border-color: rgba(229, 9, 20, 0.4);
+  box-shadow: 0 12px 32px -6px rgba(0, 0, 0, 0.7), 0 0 20px rgba(229, 9, 20, 0.2);
 }
 
 .ranking-content {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 24px;
 }
 
+/* 3D / Metallic Rank Numeral */
+.rank-number-box {
+  width: 55px;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.rank-num {
+  font-family: 'Outfit', sans-serif;
+  font-size: 2.6rem;
+  font-weight: 900;
+  line-height: 1;
+  background: linear-gradient(180deg, #ffffff 20%, #94a3b8 70%, #475569 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: all 0.3s ease;
+}
+
+.ranking-card:hover .rank-num {
+  background: linear-gradient(180deg, #ffffff 0%, #ff4d4d 50%, #e50914 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transform: scale(1.08);
+}
+
+/* Image Wrapper */
 .ranking-image-wrapper {
   position: relative;
   flex-shrink: 0;
+  width: 90px;
+  height: 130px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
 }
 
 .ranking-image {
-  width: 120px;
-  height: 180px;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  border-radius: 12px;
-  transition: transform 0.3s ease, filter 0.3s ease;
+  transition: transform 0.4s ease;
 }
 
 .ranking-card:hover .ranking-image {
-  transform: scale(1.1);
-  filter: brightness(1.2);
+  transform: scale(1.08);
 }
 
 .image-overlay {
@@ -97,332 +137,132 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.5));
-  border-radius: 12px;
-  transition: background 0.3s ease;
+  background: linear-gradient(to top, rgba(8, 8, 10, 0.6) 0%, transparent 60%);
 }
 
-.ranking-card:hover .image-overlay {
-  background: linear-gradient(180deg, rgba(255, 0, 102, 0.2), rgba(0, 0, 0, 0.5));
-}
-
+/* Info */
 .ranking-info {
   flex: 1;
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.rank-number {
-  font-size: 2.2rem;
-  font-weight: 800;
-  color: #ff0066;
-  transition: color 0.3s ease;
-}
-
-.ranking-card:hover .rank-number {
-  color: #ff4d4d;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
 }
 
 .movie-details {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 6px;
+  max-width: 650px;
+}
+
+.meta-pill-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.movie-category-pill {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--brand-red, #e50914);
+  background: rgba(229, 9, 20, 0.1);
+  padding: 3px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.movie-genre-pill {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #94a3b8;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 3px 8px;
+  border-radius: 4px;
 }
 
 .movie-title {
-  font-size: 1.5rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.35rem;
   font-weight: 700;
   color: #ffffff;
+  transition: color 0.2s ease;
+}
+
+.ranking-card:hover .movie-title {
+  color: #f1f5f9;
+}
+
+.movie-desc-excerpt {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: #94a3b8;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  transition: color 0.3s ease;
 }
 
-.ranking-card:hover .movie-title {
-  color: #ff4d4d;
-}
-
-.movie-category {
-  font-size: 0.95rem;
-  color: #ff4d4d;
-  font-weight: 500;
-}
-
-.movie-rating {
+/* Rating Badge */
+.movie-rating-badge {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 1.2rem;
-  font-weight: 700;
-  background: linear-gradient(90deg, #ff1a1a 0%, #ff4d4d 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  align-items: baseline;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 8px 14px;
+  border-radius: 10px;
+  flex-shrink: 0;
 }
 
-.star {
-  font-size: 1.4rem;
-  color: #ff1a1a;
-  text-shadow: 0 0 10px rgba(255, 26, 26, 0.5);
-  -webkit-text-fill-color: initial;
+.movie-rating-badge .star-icon {
+  color: #fbbf24;
+  font-size: 1rem;
 }
 
-.movie-modal-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  animation: fadeIn 0.3s ease;
-  overscroll-behavior: contain; /* Prevent scroll interference */
-}
-
-.movie-modal {
-  background: rgba(30, 30, 30, 0.95);
-  border-radius: 20px;
-  max-width: 600px;
-  width: 90%;
-  overflow: hidden;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5); /* Reduced shadow */
-  animation: modalPop 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-  position: relative;
-  max-height: 90vh; /* Prevent modal from exceeding viewport */
-  overflow-y: auto;
-}
-
-.modal-close {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: rgba(0, 0, 0, 0.5);
+.movie-rating-badge .rating-num {
+  font-size: 1.25rem;
+  font-weight: 800;
   color: #ffffff;
-  border: none;
-  border-radius: 50%;
-  width: 2rem;
-  height: 2rem;
-  font-size: 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background 0.3s ease;
 }
 
-.modal-close:hover {
-  background: rgba(255, 0, 102, 0.5);
-}
-
-.modal-image {
-  width: 100%;
-  height: 300px;
-  object-fit: cover;
-  filter: brightness(0.8);
-}
-
-.modal-content {
-  padding: 2rem;
-}
-
-.modal-title {
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-
-.modal-category {
-  font-size: 1.1rem;
-  color: #ff4d4d;
-  margin-bottom: 1rem;
+.movie-rating-badge .rating-max {
+  font-size: 0.78rem;
+  color: #64748b;
   font-weight: 600;
 }
 
-.modal-description {
-  font-size: 1rem;
-  color: #cccccc;
-  margin-bottom: 1.5
-
-rem;
-  line-height: 1.7;
-  max-height: 100px;
-  overflow-y: auto;
-}
-
-.modal-ratings {
-  display: grid;
-  gap: 0.75rem;
-}
-
-.rating-item {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.rating-label {
-  font-size: 1rem;
-  color: #ffffff;
-  font-weight: 500;
-  min-width: 80px;
-}
-
-.rating-bar {
-  flex: 1;
-  height: 8px;
-  background: #3a3a3a;
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.rating-bar div {
-  height: 100%;
-  background: linear-gradient(90deg, #ff0066, #ff4d4d);
-  transition: width 0.5s ease;
-}
-
-.rating-value {
-  font-size: 1rem;
-  color: #ffffff;
-  font-weight: 500;
-}
-
-@keyframes slideIn {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes modalPop {
-  from {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-/* Responsive Design */
-@media (max-width: 1024px) {
-  .tier-title {
-    font-size: 2.8rem;
-  }
-
-  .ranking-image {
-    width: 100px;
-    height: 150px;
-  }
-}
-
 @media (max-width: 768px) {
-  .toptier-container {
-    padding: 1.5rem;
-  }
-
-  .tier-section {
-    padding: 2rem 0;
-  }
-
   .tier-title {
-    font-size: 2.2rem;
+    font-size: 1.9rem;
   }
-
   .ranking-card {
-    padding: 1rem;
+    padding: 12px 14px;
   }
-
-  .ranking-image {
-    width: 80px;
-    height: 120px;
+  .ranking-content {
+    gap: 14px;
   }
-
-  .rank-number {
+  .rank-num {
     font-size: 1.8rem;
   }
-
+  .rank-number-box {
+    width: 35px;
+  }
+  .ranking-image-wrapper {
+    width: 65px;
+    height: 95px;
+  }
   .movie-title {
-    font-size: 1.3rem;
+    font-size: 1.05rem;
   }
-
-  .movie-rating {
-    font-size: 1.1rem;
+  .movie-desc-excerpt {
+    display: none;
   }
-
-  .modal-image {
-    height: 200px;
+  .movie-rating-badge {
+    padding: 6px 10px;
   }
-
-  .modal-title {
-    font-size: 1.6rem;
+  .movie-rating-badge .rating-num {
+    font-size: 1rem;
   }
-
-  .modal-description {
-    font-size: 0.95rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .toptier-container {
-    padding: 1rem;
-  }
-
-  .ranking-content {
-    gap: 0.75rem;
-  }
-
-  .ranking-image {
-    width: 60px;
-    height: 90px;
-  }
-
-  .rank-number {
-    font-size: 1.6rem;
-  }
-
-  .movie-title {
-    font-size: 1.1rem;
-  }
-
-  .movie-category {
-    font-size: 0.8rem;
-  }
-
-  .movie-rating {
-    font-size: 0.9rem;
-  }
-
-  .modal-content {
-    padding: 1.5rem;
-  }
-
-  .modal-title {
-    font-size: 1.4rem;
-  }
-
-  .modal-description {
-    font-size: 0.9rem;
-  }
-
-  .rating-label,
-  .rating-value {
-    font-size: 0.9rem;
-  }
-
-  .rating-label {
-    min-width: 60px;
-  }
-}
+}

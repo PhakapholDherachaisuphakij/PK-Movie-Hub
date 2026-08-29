@@ -84,28 +84,50 @@ function Index() {
       <div className="background-wrapper">
         <Background items={backgroundItems} />
       </div>
+      
       <div className="home-overlay">
         <div className="home-card">
-          <div className="home-pre-title">🎬 PHAKAPHOL'S CURATION</div>
-          <h1 className="home-title">PK MOVIE HUB</h1>
-          <h2 className="home-subtitle">My Personal Series Collection</h2>
+          <div className="home-pre-badge">
+            <span className="live-pulse-dot"></span>
+            <span>PHAKAPHOL'S CURATED DIARY</span>
+          </div>
+
+          <h1 className="home-title">
+            <span>PK</span>
+            <span className="title-highlight">FLIX</span>
+          </h1>
+          <h2 className="home-subtitle">Personal Cinema & Series Hub</h2>
+          
           <p className="home-description">
-            A meticulously curated diary of cinematic masterpieces, emotional K-Dramas, action-packed blockbusters, and thought-provoking documentaries.
+            A meticulously curated diary of cinematic masterpieces, emotional K-Dramas, action-packed blockbusters, and unfiltered reviews.
           </p>
+
+          <div className="home-feature-tags">
+            <span className="feature-pill">
+              <span className="pill-icon">🎬</span> 100+ Titles
+            </span>
+            <span className="feature-pill">
+              <span className="pill-icon">⭐</span> Honest Ratings
+            </span>
+            <span className="feature-pill">
+              <span className="pill-icon">🏆</span> Top 10 Hall of Fame
+            </span>
+          </div>
+
           <div className="home-btn-group">
-            <Link to="/collection">
-              <button className="home-btn primary-btn">
-                <span>LET'S START</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="5" y1="12" x2="19" y2="12"></line>
-                  <polyline points="12 5 19 12 12 19"></polyline>
-                </svg>
-              </button>
+            <Link to="/collection" className="home-btn primary-btn">
+              <span>EXPLORE COLLECTION</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
             </Link>
-            <Link to="/admin/login">
-              <button className="home-btn secondary-btn">
-                <span>Writing Blog</span>
-              </button>
+            <Link to="/admin/login" className="home-btn secondary-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 20h9"></path>
+                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+              </svg>
+              <span>Writing Blog</span>
             </Link>
           </div>
         </div>

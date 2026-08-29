@@ -1,3 +1,5 @@
+/* Modern 2026 Streaming Admin Portal Login */
+
 .login-container {
   position: relative;
   width: 100vw;
@@ -6,7 +8,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #050506;
+  background-color: var(--bg-base, #08080a);
 }
 
 .login-background-wrapper {
@@ -16,6 +18,8 @@
   width: 100%;
   height: 100%;
   z-index: 1;
+  transform: scale(1.02);
+  filter: contrast(1.05) brightness(0.85);
 }
 
 .login-overlay {
@@ -28,42 +32,45 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: radial-gradient(circle at center, rgba(12, 12, 16, 0.45) 0%, rgba(5, 5, 7, 0.92) 100%);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: 
+    radial-gradient(circle at center, rgba(229, 9, 20, 0.12) 0%, transparent 60%),
+    radial-gradient(circle at center, rgba(8, 8, 10, 0.6) 0%, rgba(8, 8, 10, 0.95) 100%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   padding: 24px;
 }
 
-/* Premium Glassmorphic Login Portal Card */
+/* Modern Frosted Glass Portal Card */
 .login-card {
   position: relative;
-  background: rgba(12, 12, 15, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px;
-  padding: 56px 48px;
+  background: rgba(15, 15, 20, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 48px 42px;
   width: 100%;
   max-width: 440px;
-  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.8);
+  box-shadow: 
+    0 24px 64px -12px rgba(0, 0, 0, 0.85),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
   color: #ffffff;
-  animation: loginCardFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: loginCardFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes loginCardFadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(20px) scale(0.97);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
-/* Floating Circular Close Button */
 .login-close-btn {
   position: absolute;
-  top: 24px;
-  right: 24px;
+  top: 20px;
+  right: 20px;
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -73,141 +80,135 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-  color: #ffffff;
+  transition: all 0.25s ease;
+  color: #94a3b8;
   z-index: 20;
 }
 
 .login-close-btn:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.3);
-  transform: rotate(90deg) scale(1.08);
+  background: var(--brand-red, #e50914);
+  border-color: var(--brand-red, #e50914);
+  color: #ffffff;
+  transform: rotate(90deg);
 }
 
 .login-header {
   text-align: center;
-  margin-bottom: 36px;
+  margin-bottom: 32px;
 }
 
 .login-pre-title {
-  font-size: 10px;
-  font-weight: 800;
-  color: #ff1a1a;
-  letter-spacing: 0.2em;
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--brand-red, #e50914);
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   margin-bottom: 8px;
 }
 
 .login-title {
-  font-size: 2.2rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 2rem;
   font-weight: 900;
   letter-spacing: -0.02em;
-  background: linear-gradient(135deg, #ffffff 40%, #a1a1aa 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #ffffff;
 }
 
 .login-subtitle {
-  font-size: 13px;
-  color: #a1a1aa;
-  margin-top: 4px;
+  font-size: 0.88rem;
+  color: #94a3b8;
+  margin-top: 6px;
 }
 
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 16px;
 }
 
 .login-field {
   display: flex;
   flex-direction: column;
-  position: relative;
 }
 
-/* Elite Custom Input Fields */
 .login-input {
   width: 100%;
-  height: 52px;
-  padding: 0 20px;
+  height: 48px;
+  padding: 0 18px;
   background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
   color: #ffffff;
-  font-size: 14px;
+  font-size: 0.92rem;
   transition: all 0.25s ease;
   outline: none;
 }
 
 .login-input::placeholder {
-  color: #71717a;
+  color: #64748b;
 }
 
 .login-input:focus {
-  background: rgba(255, 255, 255, 0.07);
-  border-color: rgba(255, 26, 26, 0.6);
-  box-shadow: 0 0 14px rgba(255, 26, 26, 0.15);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--brand-red, #e50914);
+  box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.2);
 }
 
-/* Premium Primary Submit Button */
 .login-btn {
-  height: 52px;
-  background: #ff1a1a;
+  height: 48px;
+  background: var(--brand-red, #e50914);
   color: #ffffff;
   border: none;
-  border-radius: 10px;
-  font-size: 15px;
+  border-radius: 12px;
+  font-size: 0.95rem;
   font-weight: 700;
   cursor: pointer;
-  margin-top: 14px;
-  letter-spacing: 0.03em;
-  box-shadow: 0 8px 24px rgba(255, 26, 26, 0.35);
-  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  margin-top: 8px;
+  letter-spacing: 0.02em;
+  box-shadow: 0 6px 20px rgba(229, 9, 20, 0.4);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .login-btn:hover {
-  background: #e10000;
+  background: var(--brand-red-hover, #ff1e27);
   transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(255, 26, 26, 0.5);
-}
-
-.login-btn:active {
-  transform: translateY(0);
+  box-shadow: 0 8px 25px rgba(229, 9, 20, 0.6);
 }
 
 .login-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 18px;
-  font-size: 13px;
-  color: #71717a;
+  margin-top: 14px;
+  font-size: 0.82rem;
+  color: #64748b;
 }
 
 .login-checkbox-label {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   cursor: pointer;
   transition: color 0.2s ease;
 }
 
 .login-checkbox-label:hover {
-  color: #a1a1aa;
+  color: #94a3b8;
 }
 
 .login-checkbox {
-  accent-color: #ff1a1a;
+  accent-color: var(--brand-red, #e50914);
   cursor: pointer;
 }
 
 .login-link {
-  color: #71717a;
+  color: #94a3b8;
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 .login-link:hover {
-  color: #ff1a1a;
-  text-decoration: underline;
+  color: var(--brand-red, #e50914);
 }
+
