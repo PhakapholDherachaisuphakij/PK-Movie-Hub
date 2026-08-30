@@ -209,6 +209,8 @@ function Collection() {
                     <img
                       src={movie.src}
                       alt={movie.title}
+                      loading="lazy"
+                      decoding="async"
                       onClick={() => {
                         setSelectImage(movie.src);
                         setSelectDesc(movie.description);
@@ -229,6 +231,8 @@ function Collection() {
                     <img
                       src={movie.src}
                       alt={movie.title}
+                      loading="lazy"
+                      decoding="async"
                       onClick={() => {
                         setSelectImage(movie.src);
                         setSelectDesc(movie.description);

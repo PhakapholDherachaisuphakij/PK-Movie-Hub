@@ -43,6 +43,29 @@ const NewBlog: React.FC = () => {
   };
 
   const uploadImageToStorage = async (file: File): Promise<string | null> => {
+    // Tier 1: Cloudinary Enterprise CDN (Ultra-Fast Worldwide Delivery & Auto-WebP)
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "ml_default");
+      formData.append("folder", "pkflix-posters");
+
+      const res = await fetch("https://api.cloudinary.com/v1_1/jngcqfcu/image/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (res.ok) {
+        const cldData = await res.json();
+        if (cldData.secure_url) {
+          return cldData.secure_url;
+        }
+      }
+    } catch (cldErr: any) {
+      console.warn("Direct Cloudinary upload fallback to Supabase:", cldErr?.message);
+    }
+
+    // Tier 2: Supabase Storage Fallback
     const fileExtension = file.name.split('.').pop();
     const safeFileName = `${crypto.randomUUID()}.${fileExtension}`;
 
